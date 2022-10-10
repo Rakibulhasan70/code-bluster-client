@@ -3,15 +3,192 @@ import { FaPlus } from "react-icons/fa";
 import { BsChevronDown } from "react-icons/bs";
 import HomeDetails from './HomeDetails';
 import { Link } from 'react-router-dom';
+import { HiSortAscending } from "react-icons/hi";
+import { HiSortDescending } from "react-icons/hi";
 
 
 const Home = () => {
-    const [shows, setShow] = useState([])
+    // const [shows, setShow] = useState([])
+
+    const [allUsers, setAllUsers] = useState([]);
+    const [searchedUsers, setSearchedUsers] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [selectedPage, setSelectedPage] = useState(0);
+    const [reservedUsers, setReservedUsers] = useState([]);
+
+    // const [productss, setProducts] = useState([])
+
     useEffect(() => {
         fetch(`https://growscribe-server.onrender.com/shows`)
             .then(res => res.json())
-            .then(data => setShow(data))
-    }, [shows])
+            .then(data => {
+                const firstHundred = data.slice(0, 100);
+                setAllUsers(firstHundred);
+                setSearchedUsers(firstHundred.slice(0, 5));
+                setPageCount(firstHundred.length / 5);
+                setReservedUsers(firstHundred);
+            })
+    }, [])
+
+    const handleSearchUser = (e) => {
+        const searchText = e.target.value.toLowerCase();
+        const filteredUsers = reservedUsers.filter(
+            (user) =>
+                user.firstName.toLowerCase().includes(searchText) ||
+                user.lastName.toLowerCase().includes(searchText) ||
+                user.city.toLowerCase().includes(searchText) ||
+                user.status.toLowerCase().includes(searchText)
+        );
+
+        if (searchText === "") {
+            setSearchedUsers(reservedUsers.slice(0, 5));
+            setPageCount(5);
+            setSelectedPage(0);
+            setAllUsers(reservedUsers);
+        } else {
+            setSearchedUsers(filteredUsers.slice(0, 5));
+            setPageCount(Math.ceil(filteredUsers.length / 5));
+            setAllUsers(filteredUsers);
+            setSelectedPage(0);
+        }
+    };
+
+    const showUsers = (number) => {
+        setSelectedPage(number);
+        const filteredUsers = allUsers.slice(number * 10, number * 10 + 10);
+        setSearchedUsers(filteredUsers);
+    };
+
+
+    const sortCityInAscending = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            if (a.city < b.city) {
+                return -1;
+            }
+            if (b.city < a.city) {
+                return 1;
+            }
+            return 0;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    };
+
+    const sortCityInDescending = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            if (a.city > b.city) {
+                return -1;
+            }
+            if (b.city > a.city) {
+                return 1;
+            }
+            return 0;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    };
+
+    const sortStatusInAsceding = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            if (a.status < b.status) {
+                return -1;
+            }
+            if (b.status < a.status) {
+                return 1;
+            }
+            return 0;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    }
+
+    const sortStatusInDescending = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            if (a.status > b.status) {
+                return -1;
+            }
+            if (b.status > a.status) {
+                return 1;
+            }
+            return 0;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    }
+
+    const sortNameInAsceding = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            if (a.firstName < b.firstName) {
+                return -1;
+            }
+            if (b.firstName < a.firstName) {
+                return 1;
+            }
+            return 0;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    }
+
+    const sortNameInDescending = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            if (a.firstName > b.firstName) {
+                return -1;
+            }
+            if (b.firstName > a.firstName) {
+                return 1;
+            }
+            return 0;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    }
+
+    const sortStdInAscending = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            return a.Standard - b.Standard;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    };
+
+    const sortStdInDescending = () => {
+        const sortedUsers = allUsers.sort(function (a, b) {
+            return b.Standard - a.Standard;
+        });
+        setSearchedUsers(sortedUsers.slice(0, 10));
+        setAllUsers(sortedUsers);
+        setSelectedPage(0);
+    };
+    const [page, setPage] = useState(0)
+    const [size, setSize] = useState(5)
+
+    useEffect(() => {
+        fetch(`https://secret-fortress-11551.herokuapp.com/data?page=${page}&size=${size}`)
+            .then(res => res.json())
+            .then(data => {
+                // setProducts(data)
+                // setSearchData(data)
+            })
+    }, [])
+
+    useEffect(() => {
+        fetch('https://secret-fortress-11551.herokuapp.com/productCount')
+            .then(res => res.json())
+            .then(data => {
+                const count = data.count;
+                const pages = Math.ceil(count / 20)
+                setPageCount(pages)
+            })
+    }, [])
+
     return (
         <div className='shadow-xl mx-2 pb-24'>
             <div className='mx-5 mt-10  '>
@@ -57,7 +234,7 @@ const Home = () => {
                             <button className='input  h-10 bg-accent ml-6 text-white'>Export Excel</button>
                         </div>
                         <div>
-                            <button className='input  h-10 bg-black text-white ml-12'>Total:{shows.length}</button>
+                            <button className='input  h-10 bg-black text-white ml-12'>Total:{searchedUsers.length}</button>
                         </div>
                     </div>
                 </div>
@@ -79,30 +256,126 @@ const Home = () => {
                     <div>
                         <span className="text-md font-semibold">Search: </span>
                         <input
-                            className=" border border-1 border-black rounded max-w-xs h-10"
+                            className=" border border-1 border-black rounded max-w-xs h-10 placeholder:text-gray-600 placeholder:pl-2"
                             type="text"
+                            placeholder='Search here'
+                            onChange={handleSearchUser}
                         />
                     </div>
                 </div>
-                <table className="table w-full mt-5 ">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" /></th>
-                            <th>Sr.</th>
-                            <th>Name</th>
-                            <th>City</th>
+                <div>
+                    {searchedUsers.length === -0 ? (
+                        <p className="mt-3 text-xl text-center text-red-500 mb-4">
+                            No matching records found
+                        </p>
+                    ) : (
+                        ""
+                    )}
+                    <div>
+                        <table className="table w-full mt-5 ">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" /></th>
+                                    <th>Sr.</th>
+                                    <th>
+                                        Name{" "}
+                                        <HiSortAscending
+                                            onClick={sortNameInAsceding}
+                                            title="Ascending Order"
+                                            className="inline text-base cursor-pointer mx-1"
+                                        ></HiSortAscending>
+                                        <HiSortDescending
+                                            onClick={sortNameInDescending}
+                                            title="Descending Order"
+                                            className="inline text-base cursor-pointer"
+                                        ></HiSortDescending>
+                                    </th>
+                                    <th>
+                                        City{" "}
+                                        <HiSortAscending
+                                            onClick={sortCityInAscending}
+                                            title="Ascending Order"
+                                            className="inline text-base cursor-pointer mx-1"
+                                        ></HiSortAscending>
+                                        <HiSortDescending
+                                            onClick={sortCityInDescending}
+                                            title="Descending Order"
+                                            className="inline text-base cursor-pointer"
+                                        ></HiSortDescending>
+                                    </th>
+                                    <th>
+                                        Status{" "}
+                                        <HiSortAscending
+                                            onClick={sortStatusInAsceding}
+                                            title="Ascending Order"
+                                            className="inline text-base cursor-pointer mx-1"
+                                        ></HiSortAscending>
+                                        <HiSortDescending
+                                            onClick={sortStatusInDescending}
+                                            title="Descending Order"
+                                            className="inline text-base cursor-pointer"
+                                        ></HiSortDescending>
+                                    </th>
+                                    <th>
+                                        Std.{" "}
+                                        <HiSortAscending
+                                            onClick={sortStdInAscending}
+                                            title="Ascending Order"
+                                            className="inline text-base cursor-pointer mx-1"
+                                        ></HiSortAscending>
+                                        <HiSortDescending
+                                            onClick={sortStdInDescending}
+                                            title="Descending Order"
+                                            className="inline text-base cursor-pointer"
+                                        ></HiSortDescending>
+                                    </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    searchedUsers.map((show, index) => <HomeDetails key={show._id} show={show} index={index}></HomeDetails>)
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
-                            <th>Status</th>
-                            <th>Std.</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            shows.map((show, index) => <HomeDetails key={show._id} show={show} index={index}></HomeDetails>)
-                        }
-                    </tbody>
-                </table>
+                    {/* <div className="text-center mt-5">
+                        {[...Array(parseInt(pageCount)).keys()]?.map((number, index) => (
+                            <button
+                                onClick={() => showUsers(parseInt(number))}
+                                className={`btn btn-sm border border-primary bg-base-100 hover:border-primary text-primary hover:bg-primary hover:text-white font-bold m-1 rounded-md ${selectedPage === number
+                                    ? "bg-primary text-white"
+                                    : ""
+                                    }`}
+                                key={parseInt(index)}
+                            >
+                                {parseInt(number) + 1}
+                            </button>
+                        ))}
+                    </div> */}
+                    <div className='pagination w-50 mx-auto my-5 text-center    flex items-center justify-center'>
+
+                        <h5 className='px-3'>Page:</h5>
+                        {[...Array(parseInt(pageCount)).keys()]?.map((number, index) => (
+                            <button
+                                onClick={() => showUsers(parseInt(number))}
+                                className={`btn btn-sm border border-primary bg-base-100 hover:border-primary text-primary hover:bg-primary hover:text-white font-bold m-1 rounded-md ${selectedPage === number
+                                    ? "bg-primary text-white"
+                                    : ""
+                                    }`}
+                                key={parseInt(index)}
+                            >
+                                {parseInt(number) + 1}
+                            </button>
+                        ))}
+                        <select onChange={e => setSize(e.target.value)}>
+                            <option selected value="10">10</option>
+
+                        </select>
+                    </div>
+
+                </div>
             </div>
         </div>
     );

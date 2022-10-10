@@ -61,7 +61,7 @@ const Update = () => {
                 <div>
                     <div className='shadow-xl mx-4 pb-12'>
                         <div className='mx-5 my-8 '>
-                            <h2 className='font-semibold text-xl'>Add Student</h2>
+                            <h2 className='font-semibold text-xl'>Update Student</h2>
 
 
                             <div className='mt-8 grid grid-cols-4 gap-x-16'>

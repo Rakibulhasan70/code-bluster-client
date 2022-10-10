@@ -145,9 +145,9 @@ const Add = () => {
                             <div className='mt-10'>
                                 <span className="text-md font-semibold">Brief Introduction</span>
                                 <br />
-                                <textarea {...register("brief")} name="" id="" cols="20" rows="8" className='border border-1 border-black rounded max-w-3xl w-full' required>
+                                <input {...register("brief")} className='border border-1 border-black rounded max-w-3xl w-full py-28' required>
 
-                                </textarea>
+                                </input>
                             </div>
 
                             <div className='mt-8 grid grid-cols-4 gap-x-16'>

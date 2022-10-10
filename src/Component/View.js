@@ -19,7 +19,7 @@ const View = () => {
             <div>
                 <div className='shadow-xl mx-4 pb-12'>
                     <div className='mx-5 my-8 '>
-                        <h2 className='font-semibold text-xl'>Add Student</h2>
+                        <h2 className='font-semibold text-xl'>Vew Student</h2>
 
 
                         <div className='mt-8 grid grid-cols-4 gap-x-16'>
@@ -98,19 +98,13 @@ const View = () => {
                                 <span className="text-md font-semibold">Skills*
                                 </span>
                                 <br />
-                                <select
+                                <input
                                     className=" border border-1 border-black rounded max-w-3xl h-12 w-full px-5"
-                                    type="date"
+                                    type="text"
 
                                     defaultValue={products.skill}
                                     disabled>
-                                    <option value="Select" selected>Select</option>
-                                    <option value="Javascript">Javascript</option>
-                                    <option value="python">python</option>
-                                    <option value="C++">C++</option>
-                                    <option value="Java">Java</option>
-                                    <option value="React">React</option>
-                                </select>
+                                </input>
                             </div>
 
                         </div>
@@ -152,17 +146,14 @@ const View = () => {
                                 <span className="text-md font-semibold">Status*
                                 </span>
                                 <br />
-                                <select
+                                <input
                                     className=" border border-1 border-black rounded max-w-3xl h-12 w-full px-5"
-                                    type="date"
+                                    type="text"
 
                                     defaultValue={products.status}
                                     disabled>
 
-                                    <option value="Select" selected>Select</option>
-                                    <option value="Live">Live</option>
-                                    <option value="Suspended">Suspended</option>
-                                </select>
+                                </input>
                             </div>
                             <div>
                                 <span className="text-md font-semibold">Is Active</span>
