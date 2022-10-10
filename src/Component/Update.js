@@ -26,7 +26,7 @@ const Update = () => {
             Standard: data?.Standard,
 
         }
-        fetch(`http://localhost:5000/shows/${id}`, {
+        fetch(`https://growscribe-server.onrender.com/shows/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const AddDelete = () => {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        fetch('http://localhost:5000/addDelete')
+        fetch('https://growscribe-server.onrender.com/addDelete')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [products])

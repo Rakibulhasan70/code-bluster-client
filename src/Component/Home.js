@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     const [shows, setShow] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/shows`)
+        fetch(`https://growscribe-server.onrender.com/shows`)
             .then(res => res.json())
             .then(data => setShow(data))
     }, [shows])

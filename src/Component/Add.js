@@ -21,7 +21,7 @@ const Add = () => {
             Standard: data?.Standard,
 
         }
-        fetch(`http://localhost:5000/add`, {
+        fetch(`https://growscribe-server.onrender.com/add`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

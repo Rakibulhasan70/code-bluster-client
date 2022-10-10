@@ -7,7 +7,7 @@ import ShowSubject from './ShowSubject';
 const Subject = () => {
     const [shows, setShow] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/show`)
+        fetch(`https://growscribe-server.onrender.com/show`)
             .then(res => res.json())
             .then(data => setShow(data))
     }, [shows])
@@ -18,7 +18,7 @@ const Subject = () => {
             sr: data?.sr,
             subject: data?.subject,
         }
-        fetch(`http://localhost:5000/subjectAdd`, {
+        fetch(`https://growscribe-server.onrender.com/subjectAdd`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

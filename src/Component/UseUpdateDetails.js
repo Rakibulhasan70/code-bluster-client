@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const UseUpdateDetails = (Id) => {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/shows/${Id}`)
+        fetch(`https://growscribe-server.onrender.com/shows/${Id}`)
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [products])

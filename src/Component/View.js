@@ -10,7 +10,7 @@ const View = () => {
 
     const [subjects, setSubjects] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/show`)
+        fetch(`https://growscribe-server.onrender.com/show`)
             .then(res => res.json())
             .then(data => setSubjects(data))
     }, [subjects])

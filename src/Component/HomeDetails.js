@@ -23,7 +23,7 @@ const HomeDetails = ({ show, index }) => {
     const handleDeleteBtn = id => {
         const procced = window.confirm('Are you sure for delete ??')
         if (procced) {
-            const url = `http://localhost:5000/addDelete/${id}`
+            const url = `https://growscribe-server.onrender.com/addDelete/${id}`
             console.log(url);
             fetch(url, {
                 method: "DELETE"
